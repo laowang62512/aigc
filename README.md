@@ -26,8 +26,6 @@ plaintext
 src/main/java/com/lcd
 ├── advisor                // SpringAI 自定义拦截器Advisor
 │   ├── SimpleLoggerAdvisor // 全链路监控埋点拦截器（耗时/Token/工具调用采集）
-│   ├── MessageChatMemoryAdvisor // JDBC持久化会话记忆拦截器
-│   └── QuestionAnswerAdvisor // RAG知识库检索拦截器
 ├── config                 // 全局配置类
 │   ├── ChatClientConfiguration       // ChatClient多实例配置（主对话/摘要对话）
 │   ├── ChunkProperties        // rag检索相关配置
