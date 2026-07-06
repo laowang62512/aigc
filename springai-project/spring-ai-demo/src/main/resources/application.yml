@@ -1,0 +1,48 @@
+server:
+  port: 8888
+spring:
+  elasticsearch:
+    uris: http://192.168.150.101:19200
+  application:
+    name: spring-ai-demo
+  ai:
+    openai:
+      base-url: https://api.chatanywhere.tech
+      api-key: sk-PH1wAwzv8wbWV9JaI191gdocUehnycUPA6ctvWXwrA2vt5va
+      chat:
+        options:
+          model: gpt-3.5-turbo
+        enabled: true
+      embedding:
+        enabled: true
+        options:
+          model: text-embedding-ada-002 #向量模型
+    vectorstore: #向量库配置
+      elasticsearch: #使用ES作为向量库存储
+        initialize-schema: true  #开启初始化向量库结构
+        dimensions: 1536  #向量维度维度
+  datasource:
+    url: jdbc:mysql://192.168.150.101:3306/ry_vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: itcast321bca
+    driver-class-name: com.mysql.cj.jdbc.Driver
+lcd:
+  max-token: 16385
+rag:
+  chunk:
+    max-size: 500
+    overlap: 100
+    min-len: 100
+  # 检索参数统一放在同一段，不再新建Properties
+  vector-top-n: 8
+  min-similarity: 0.6
+  rerank-top-n: 4
+  enable-rerank: true
+resilience4j:
+  circuitbreaker:
+    instances:
+      chatAnywhereApi:
+        slidingWindowSize: 10          # 滑动窗口统计10次调用
+        failureRateThreshold: 50       # 失败率50%触发熔断
+        waitDurationInOpenState: 10000 # 熔断打开冷却10秒
+        registerHealthIndicator: true
